@@ -1,1 +1,1 @@
-# NewRepo
+Just paint
