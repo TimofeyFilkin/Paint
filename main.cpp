@@ -1,9 +1,46 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+sf::Color getcolor(int col) {
+    switch (col)
+    {
+    case(1):
+        return(sf::Color::Black);
+        break;
+    case(2):
+        return(sf::Color::Blue);
+        break;
+    case(3):
+        return(sf::Color::Red);
+        break;
+    case(4):
+        return(sf::Color::Green);
+        break;
+    case(5):
+        return(sf::Color::Yellow);
+        break;
+    case(6):
+        return(sf::Color::Cyan);
+        break;
+
+    case(7):
+        return(sf::Color(255, 155, 155));
+        break;
+
+    case(8):
+        return(sf::Color(0, 57, 7));
+        break;
+    case(9):
+        return(sf::Color(81, 0, 68));
+        break;
+    }
+}
+
 int main()
 {
     int color = 1;
+    float brushSize;
+    brushSize = 10.f;
     bool flag;
     bool flag2;
     bool flag3;
@@ -76,55 +113,28 @@ int main()
             color = 8;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num9))
             color = 9;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+            brushSize += 0.1f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            brushSize -= 0.1f;
         //Draw here
         
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-            sf::CircleShape shape(10.f);
-            switch (color)
-            {
-            case(1): 
-                shape.setFillColor(sf::Color::Black);
-                break;
-            case(2): 
-                shape.setFillColor(sf::Color::Blue);
-                break;
-            case(3): 
-                shape.setFillColor(sf::Color::Red);
-                break;
-            case(4): 
-                shape.setFillColor(sf::Color::Green);
-                break;
-            case(5): 
-                shape.setFillColor(sf::Color::Yellow);
-                break;
-            case(6): 
-                shape.setFillColor(sf::Color::Cyan);
-                break;
-            
-            case(7):
-                shape.setFillColor(sf::Color(255, 155, 155));
-                break;
-            
-            case(8):
-                shape.setFillColor(sf::Color(0, 57, 7));
-                break;
-            case(9):
-                shape.setFillColor(sf::Color(81, 0, 68));
-                break;
-            }
+            sf::CircleShape shape(brushSize);
+            shape.setFillColor(getcolor(color));
             int mouseX, mouseY;
-            mouseX = sf::Mouse::getPosition(window).x - 10;
-            mouseY = sf::Mouse::getPosition(window).y - 10;
+            mouseX = sf::Mouse::getPosition(window).x - brushSize;
+            mouseY = sf::Mouse::getPosition(window).y - brushSize;
             shape.setPosition(mouseX, mouseY);
             buffer.draw(shape);
             buffer.display();
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-            sf::CircleShape shape(30.f);
+            sf::CircleShape shape(brushSize);
             shape.setFillColor(sf::Color::White);
             int mouseX, mouseY;
-            mouseX = sf::Mouse::getPosition(window).x - 30;
-            mouseY = sf::Mouse::getPosition(window).y - 30;
+            mouseX = sf::Mouse::getPosition(window).x - brushSize;
+            mouseY = sf::Mouse::getPosition(window).y - brushSize;
             shape.setPosition(mouseX, mouseY);
             buffer.draw(shape);
             buffer.display();
@@ -132,39 +142,17 @@ int main()
         sf::Sprite bufferSprite(buffer.getTexture());
         window.draw(bufferSprite);
         sf::CircleShape shape(40.f);
-        switch (color)
-        {
-        case(1):
-            shape.setFillColor(sf::Color::Black);
-            break;
-        case(2):
-            shape.setFillColor(sf::Color::Blue);
-            break;
-        case(3):
-            shape.setFillColor(sf::Color::Red);
-            break;
-        case(4):
-            shape.setFillColor(sf::Color::Green);
-            break;
-        case(5):
-            shape.setFillColor(sf::Color::Yellow);
-            break;
-        case(6):
-            shape.setFillColor(sf::Color::Cyan);
-            break;
-        case(7):
-            shape.setFillColor(sf::Color(255, 155, 155));
-            break;
-        case(8):
-            shape.setFillColor(sf::Color(0, 57, 7));
-            break;
-        case(9):
-            shape.setFillColor(sf::Color(81, 0, 68));
-            break;
-        }
+        shape.setFillColor(getcolor(color));
         window.draw(shape);
+        sf::CircleShape brush(brushSize);
+        brush.setFillColor(getcolor(color));
+        int mouseX, mouseY;
+        mouseX = sf::Mouse::getPosition(window).x - brushSize;
+        mouseY = sf::Mouse::getPosition(window).y - brushSize;
+        brush.setPosition(mouseX, mouseY);
+        window.draw(brush);
         window.display();
     }
 
-    return 0;
+    return 228;
 }
